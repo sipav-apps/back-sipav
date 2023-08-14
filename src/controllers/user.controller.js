@@ -1,10 +1,23 @@
 import bcrypt from "bcrypt";
 import { userValidation } from "../validations/user.validations.js";
 import { createUser, deleteUser, getAllUsers, getById, updateUser } from "../repositories/user.repository.js";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const create = async (req, res) => {
   try { 
     await userValidation.validate(req.body);
+
+    const { email, password} = req.body;
+    
+    const userExists = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if(userExists) {
+      return(res.status(400).send("User already exists"))
+    }
 
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     req.body.password = hashPassword;
