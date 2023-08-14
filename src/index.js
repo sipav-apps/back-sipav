@@ -12,5 +12,5 @@ app.use(express.json());
 
 routes(app);
 
-app.listen(3001);
-console.log("servidor iniciou na porta 3001")
+app.listen(3333);
+console.log("servidor iniciou na porta 3333")
