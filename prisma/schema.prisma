@@ -17,9 +17,9 @@ model User {
   cpf                String    @unique
   password           String
   birthdate          DateTime
-  telegram           String?   @unique
   phoneNumber        String?   @unique
   isResponsible      Boolean   @default(false)
+  telegram           String?   @unique
   dependents         Dependent[] @relation("ResponsibleToDependent")
 }
 

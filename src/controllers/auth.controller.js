@@ -27,7 +27,6 @@ export const login = async (req, res) => {
     if(!userExists) {
       return(res.status(400).send("User not found"))
     }
-    console.log(userExists.password, password)
 
     const passwordMatches = await bcrypt.compare(password, userExists.password);
     
