@@ -1,5 +1,5 @@
-import userRoutes from "./user.routes";
-import authRoutes from "./auth.routes";
+import userRoutes from "./user.routes.js";
+import authRoutes from "./auth.routes.js";
 
 const routes = app => {
   userRoutes(app);
