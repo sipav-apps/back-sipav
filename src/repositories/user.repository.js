@@ -1,6 +1,20 @@
-import { prisma } from "../services/prisma"
+import { prisma } from "../services/prisma.js"
+
+const nulifyObjectStrings = (values) =>{
+  // remove empty strings
+  for (let [key, value] of Object.entries(values)) {
+    if (value instanceof String ){
+      value = value.trim();
+    }
+    if (!value){
+      values[key] = undefined;
+    }
+  }
+  return values;
+}
 
 export const createUser = async (data) => {
+  data = nulifyObjectStrings(data);
   const user = await prisma.user.create({
     data,
     select: {
@@ -59,6 +73,7 @@ export const getById = async (id) => {
 }
 
 export const updateUser = async (id, data) => {
+  data = nulifyObjectStrings(data);
   const user = await prisma.user.update({
     where: {
       id
