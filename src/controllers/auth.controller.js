@@ -3,7 +3,7 @@ import { authValidation } from "../validations/auth.validations.js";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 import express from "express";
-require('dotenv').config();
+import 'dotenv/config'
 
 const secret = process.env.JWT_SECRET;
 

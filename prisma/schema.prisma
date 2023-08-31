@@ -18,16 +18,9 @@ model User {
   password           String
   birthdate          DateTime
   phoneNumber        String?   @unique
-  isResponsible      Boolean   @default(false)
+  isResponsible      Boolean   @default(true)
   telegram           String?   @unique
-  dependents         Dependent[] @relation("ResponsibleToDependent")
-}
-
-model Dependent {
-  id                 Int       @id @default(autoincrement())
-  name               String
-  cpf                String    @unique
-  birthdate          DateTime
-  responsibleUserId  Int
-  responsibleUser    User     @relation("ResponsibleToDependent", fields: [responsibleUserId], references: [id])
+  responsible_id     Int?
+  responsible        User?     @relation("ResponsibleToDependent", fields: [responsible_id], references: [id])
+  dependents         User[]    @relation("ResponsibleToDependent")
 }
