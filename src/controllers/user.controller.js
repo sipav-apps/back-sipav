@@ -9,18 +9,22 @@ export const create = async (req, res) => {
   try { 
     await userValidation.validate(req.body);
 
-    const { email, password} = req.body;
-    
-    const userExists = await prisma.user.findUnique({
-      where: { email },
-    });
+    const { isResponsible } = req.body;
 
-    if(userExists) {
-      return(res.status(400).send("User already exists"))
-    }
-
-    const hashPassword = await bcrypt.hash(req.body.password, 10);
-    req.body.password = hashPassword;
+    if(isResponsible) {
+      const { email, password} = req.body;
+      
+      const userExists = await prisma.user.findUnique({
+        where: { email },
+      });
+      
+      if(userExists) {
+        return(res.status(400).send("User already exists"))
+      }
+  
+      const hashPassword = await bcrypt.hash(req.body.password, 10);
+      req.body.password = hashPassword;
+    } 
     const user = await createUser(req.body);
     res.status(200).send(user);
   } catch (e) {
