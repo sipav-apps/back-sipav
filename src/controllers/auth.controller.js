@@ -21,7 +21,21 @@ export const login = async (req, res) => {
     if (!password) return res.status(400).send("Password field not filled");
     
     const userExists = await prisma.user.findUnique({
-      where: { email },
+      where: {
+        email
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        cpf: true,
+        birthdate: true,
+        telegram: true,
+        phoneNumber: true,
+        isResponsible: true,
+        dependents: true,
+      }
     });
     
     if(!userExists) {
